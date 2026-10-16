@@ -1,0 +1,17 @@
+{
+  "private": true,
+  "scripts": {
+    "eval": "promptfoo eval -c evals/promptfooconfig.yaml --no-cache --max-concurrency 1",
+    "eval:faq": "promptfoo eval -c evals/promptfooconfig.yaml --no-cache --max-concurrency 1 --filter-metadata phase=faq",
+    "eval:booking": "promptfoo eval -c evals/promptfooconfig.yaml --no-cache --max-concurrency 1 --filter-metadata phase=booking",
+    "eval:marginal": "promptfoo eval -c evals/promptfooconfig.yaml --no-cache --max-concurrency 1 --filter-metadata phase=marginal",
+    "eval:prohibited": "promptfoo eval -c evals/promptfooconfig.yaml --no-cache --max-concurrency 1 --filter-metadata phase=prohibited",
+    "eval:validate": "promptfoo validate config -c evals/promptfooconfig.yaml",
+    "test:assertions": "node evals/tests/check_assertions.js",
+    "eval:view": "promptfoo view",
+    "eval:report": "promptfoo eval -c evals/promptfooconfig.yaml --no-cache --max-concurrency 1 -o reports/promptfoo-report.html -o reports/promptfoo-results.json"
+  },
+  "devDependencies": {
+    "promptfoo": "0.123.1"
+  }
+}

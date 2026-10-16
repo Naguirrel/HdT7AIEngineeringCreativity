@@ -1,0 +1,17 @@
+flowchart TD
+    User((Usuario)) --> Supervisor[Central Supervisor]
+
+    Supervisor -->|as_tool| FAQAgent[FAQ Agent]
+    Supervisor -->|as_tool| WeatherAgent[Weather Agent]
+    Supervisor -->|as_tool| SchedulingAgent[Scheduling Agent]
+
+    FAQAgent -->|search_faq| FaqService[(FAQ Service /\nknowledge base)]
+    WeatherAgent -->|check_jump_day| WeatherService[Weather Service]
+    SchedulingAgent -->|check_appointment_availability\ncreate_appointment| CalendarService[Calendar Service\n in-memory]
+
+    WeatherService --> DatePolicy[date_policy]
+    WeatherService --> OpenMeteo[(Open-Meteo API)]
+    WeatherService --> WeatherPolicy[weather_policy\n deterministico]
+
+    classDef shared fill:#eef,stroke:#448;
+    class FaqService,WeatherService,CalendarService,OpenMeteo,DatePolicy,WeatherPolicy shared;

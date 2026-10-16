@@ -1,0 +1,11 @@
+{
+  "ideal": {"wind_speed": 10, "wind_gusts": 15, "precipitation": 0, "cloud_cover": 10, "temperature": 25},
+  "marginal_wind_lower": {"wind_speed": 20, "wind_gusts": 25, "precipitation": 0, "cloud_cover": 10, "temperature": 25},
+  "marginal_wind_upper": {"wind_speed": 28, "wind_gusts": 30, "precipitation": 0, "cloud_cover": 10, "temperature": 25},
+  "prohibited_wind": {"wind_speed": 28.1, "wind_gusts": 30, "precipitation": 0, "cloud_cover": 10, "temperature": 25},
+  "prohibited_gusts": {"wind_speed": 10, "wind_gusts": 35.1, "precipitation": 0, "cloud_cover": 10, "temperature": 25},
+  "prohibited_rain": {"wind_speed": 10, "wind_gusts": 15, "precipitation": 0.1, "cloud_cover": 10, "temperature": 25},
+  "marginal_clouds": {"wind_speed": 10, "wind_gusts": 15, "precipitation": 0, "cloud_cover": 75, "temperature": 25},
+  "prohibited_clouds": {"wind_speed": 10, "wind_gusts": 15, "precipitation": 0, "cloud_cover": 75.1, "temperature": 25},
+  "error": null
+}

@@ -1,0 +1,13 @@
+# Direct dependencies, pinned to the versions verified with the test suite.
+# For a fully reproducible environment (including transitive packages) use
+# requirements.lock.txt; see README "Dependencias reproducibles".
+openai-agents==0.22.3
+openai==3.22.1
+pydantic==2.13.5
+requests==2.34.2
+tzdata==2026.4
+
+# Test-only
+pytest==8.4.2
+pytest-asyncio==0.26.0
+requests-mock==1.12.1

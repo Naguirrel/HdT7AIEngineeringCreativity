@@ -1,0 +1,21 @@
+flowchart TD
+    User((Usuario)) --> FAQAgent[FAQ Agent]
+
+    FAQAgent -->|handoff| WeatherAgent[Weather Agent]
+    WeatherAgent -->|handoff| SchedulingAgent[Scheduling Agent]
+    WeatherAgent -->|handoff| FAQAgent
+    SchedulingAgent -->|handoff| FAQAgent
+
+    FAQAgent -->|search_faq| FaqService[(FAQ Service /\nknowledge base)]
+    WeatherAgent -->|check_jump_day| WeatherService[Weather Service]
+    SchedulingAgent -->|check_appointment_availability\ncreate_appointment| CalendarService[Calendar Service\n in-memory]
+
+    WeatherService --> DatePolicy[date_policy]
+    WeatherService --> OpenMeteo[(Open-Meteo API)]
+    WeatherService --> WeatherPolicy[weather_policy\n deterministico]
+
+    classDef shared fill:#eef,stroke:#448;
+    class FaqService,WeatherService,CalendarService,OpenMeteo,DatePolicy,WeatherPolicy shared;
+
+    Note[Anti-bypass: create_appointment exige jump_assessment valido\npara la misma fecha, sin importar la ruta de handoffs]
+    SchedulingAgent -.-> Note

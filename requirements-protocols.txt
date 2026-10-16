@@ -1,0 +1,8 @@
+# Additive environment for the new protocol entrypoints.
+# A2A intentionally targets stable protocol 0.3, not the incompatible 1.0 tutorial.
+-r requirements.txt
+mcp==2.2.0
+a2a-sdk[http-server]==0.3.24
+httpx==0.28.1
+uvicorn==0.54.0
+python-dotenv==1.2.3

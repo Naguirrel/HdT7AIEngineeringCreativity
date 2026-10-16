@@ -1,0 +1,30 @@
+description: Parachute S.A. centralized supervisor evaluations
+env:
+  REQUEST_TIMEOUT_MS: 45000
+# One case at a time: the provider and grader share the LLM quota.
+evaluateOptions:
+  maxConcurrency: 1
+prompts:
+  - '{{ turns }}'
+providers:
+  - id: file://provider.py
+    label: Central Supervisor
+    config:
+      timeout: 180000
+defaultTest:
+  options:
+    disableVarExpansion: true
+    provider:
+      id: 'openai:chat:{{ env.LLM_GRADER_MODEL }}'
+      config:
+        apiBaseUrl: '{{ env.LLM_BASE_URL }}'
+        apiKeyEnvar: LLM_API_KEY
+        maxRetries: 0
+        omitDefaults: true
+        showThinking: false
+  assert:
+    - type: latency
+      threshold: 180000
+tests:
+  - file://faq_scenarios.yaml
+  - file://appointment_scenarios.yaml

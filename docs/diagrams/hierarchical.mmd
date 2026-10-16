@@ -1,0 +1,20 @@
+flowchart TD
+    User((Usuario)) --> Root[Root Manager]
+
+    Root -->|as_tool| Knowledge[Knowledge Manager]
+    Root -->|as_tool| Booking[Booking Manager]
+
+    Knowledge -->|as_tool| FAQAgent[FAQ Agent]
+    Booking -->|as_tool| WeatherAgent[Weather Agent]
+    Booking -->|as_tool| SchedulingAgent[Scheduling Agent]
+
+    FAQAgent -->|search_faq| FaqService[(FAQ Service /\nknowledge base)]
+    WeatherAgent -->|check_jump_day| WeatherService[Weather Service]
+    SchedulingAgent -->|check_appointment_availability\ncreate_appointment| CalendarService[Calendar Service\n in-memory]
+
+    WeatherService --> DatePolicy[date_policy]
+    WeatherService --> OpenMeteo[(Open-Meteo API)]
+    WeatherService --> WeatherPolicy[weather_policy\n deterministico]
+
+    classDef shared fill:#eef,stroke:#448;
+    class FaqService,WeatherService,CalendarService,OpenMeteo,DatePolicy,WeatherPolicy shared;

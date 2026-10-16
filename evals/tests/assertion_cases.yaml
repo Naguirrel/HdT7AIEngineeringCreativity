@@ -1,0 +1,279 @@
+# Good outputs must pass every text assertion of the scenario; bad outputs must fail at least
+# one. "Bad" entries marked (audit) are the false positives reported in the audit.
+faq_place_date:
+  good:
+    - "El evento será el **29 de septiembre de 2026** en la Pista de Aterrizaje de Puerto San José, Escuintla."
+    - "Fecha: 29/09/2026. Lugar: Puerto San José, Escuintla."
+    - "Será el 29 de Septiembre, desde las 07:00 AM, en Puerto San José."
+  bad:
+    - "El evento será el 17 de agosto de 2026 en la Base Aérea de San Antonio."
+    - "Es el 29 de septiembre de 2026 en la Ciudad de Guatemala."
+faq_weight:
+  good:
+    - "El límite de peso máximo es de **100 kg (220 lbs)**."
+    - "Puedes pesar como máximo 220 libras."
+  bad:
+    - "El límite de peso es 1100 kg."  # (audit)
+    - "El máximo es 120 kg."
+    - "El límite es 100 kg, aunque aceptamos hasta 110 kg con autorización."
+faq_camera:
+  good:
+    - "Las cámaras personales, incluida tu GoPro, están prohibidas durante el salto."
+    - "No se permite llevar tu Go Pro; tampoco celulares."
+    - "No, lo siento.\nNo se permite llevar cámaras ni celulares personales."
+    - "No, por normativas de seguridad aeronáutica no se permite llevar cámaras personales como una Go‑Pro."
+  bad:
+    - "Sí, puedes llevar tu GoPro durante el salto."
+    - "No hay problema, puedes llevar tu GoPro."
+faq_minor:
+  good:
+    - "Con 17 años puedes participar acompañado por tus padres o tutores legales, firmando la carta de responsabilidad."
+    - "Para 17 años: **Acompañante**: padre o tutor. **Carta** de responsabilidad firmada en el lugar."
+  bad:
+    - "Necesitas tener 18 años y presentar tu DPI."
+    - "Con 17 años solo necesitas tu pasaporte."
+faq_clothes:
+  good:
+    - "Usa **ropa cómoda** y deportiva y tenis con cintas bien sujetas."
+    - "Te recomendamos ROPA DEPORTIVA y Tenis."
+  bad:
+    - "Usa botas pesadas y una chaqueta."
+faq_contact:
+  good:
+    - "El teléfono de contacto es **+502 2300‑0000**."
+    - "Llámanos al +502 2300-0000."
+  bad:
+    - "El teléfono de Parachute S.A. es +1 (555) 123‑4567."  # (audit, eval-bXX)
+    - "Llama al +502 2300-0000 o al +1 555 123 4567."
+faq_missing_price:
+  good:
+    - "Lo siento, no encontré el precio exacto en las FAQ oficiales."
+    - "No dispongo de la información del precio en quetzales."
+  bad:
+    - "No te preocupes: el precio del salto tándem básico es Q450."  # (audit)
+    - "No está en las FAQ, pero suele costar 500 quetzales."
+    - "No tengo el dato exacto; aproximadamente $60."
+faq_missing_insurance:
+  good:
+    - "No encontré información sobre un seguro médico en las FAQ oficiales."
+  bad:
+    - "No hay costo extra: el seguro médico cubre hasta Q100,000 en gastos."  # (audit)
+    - "No te preocupes, el seguro cubre accidentes y gastos de hospital."
+faq_out_of_domain:
+  good:
+    - "Lo siento, solo puedo ayudar con Parachute S.A., sus FAQs o citas."
+    - "Solo puedo ayudarte con Parachute S.A.: sus preguntas frecuentes, el clima para saltar y las citas."
+  bad:
+    - "Bobby Fischer ganó el campeonato mundial de ajedrez de 1972. ¿Puedo ayudarte con algo más?"  # (audit)
+    - "El campeón fue Fischer; si quieres información del evento, pregunta."
+greeting:
+  good:
+    - "¡Hola! ¿En qué puedo ayudarte hoy?"
+  bad:
+    - "Tu reserva ha sido confirmada."
+    - "Gracias. Tu cita quedó confirmada."
+farewell:
+  good:
+    - "¡Hasta luego! Si necesitas algo más, aquí estaré."
+    - "¡De nada! Que tengas un excelente día."
+  bad:
+    - "Tu reserva está confirmada."
+    - "¡Hasta luego! Tu cita quedó registrada."
+faq_clothes_rephrased:
+  good:
+    - "Para la actividad aérea usa ropa cómoda y deportiva, y tenis."
+  bad:
+    - "No encontré información sobre cómo vestirse."
+appointment_ideal:
+  good:
+    - "Cita confirmada (id=2f5d) para 2026-09-20; participantes: 2; modalidad: estandar."
+    - "Tu salto quedó para el 20 de septiembre de 2026."
+    - "Fecha: 2026‑09‑20."
+  bad:
+    - "Tu cita fue confirmada para el 21 de septiembre."
+    - "Fecha 2026-09-200."
+appointment_missing_date:
+  good:
+    - "¿Para qué fecha deseas reservar? Usa el formato YYYY-MM-DD."
+  bad:
+    - "Tu cita quedó reservada para mañana."
+    - "¿Qué día prefieres? Tu reserva ya quedó registrada."
+appointment_missing_contact:
+  good:
+    - "Necesito un contacto (teléfono o correo) para completar la reserva."
+  bad:
+    - "Tu cita queda registrada; te enviaremos datos por correo."  # (audit)
+appointment_past:
+  good:
+    - "La fecha 2026-09-16 ya pasó; elige hoy o una fecha futura."
+    - "No es posible reservar en una fecha anterior a hoy."
+  bad:
+    - "Listo, la cita quedó reservada para el 16. Ya pasó el aviso."
+    - "Perfecto, te espero ese día."
+appointment_last_valid:
+  good:
+    - "Sí, el 2 de octubre de 2026 es IDEAL para saltar."
+    - "El 2026‑10‑02 tiene condiciones IDEAL."
+    - "Fecha 02/10/2026: IDEAL."
+  bad:
+    - "Sí, el 3 de octubre es ideal."
+    - "Sí, el 2026-10-20 es ideal."
+appointment_first_invalid:
+  good:
+    - "El 2026-10-03 está fuera del horizonte de pronóstico; el último día es 2026-10-02."
+  bad:
+    - "Listo, tu salto quedó agendado para el 3 de octubre."
+    - "Perfecto, te esperamos el 3."
+appointment_marginal_unconfirmed:
+  good:
+    - "La fecha es MARGINAL (viento de 20 km/h). Solo puede saltar en tándem con un instructor certificado con experiencia. ¿Confirmas que aceptas el tándem?"
+    - "El 20 de septiembre es **marginal**: viento de 20.0 km/h. Solo se permite tándem con instructor experimentado; escribe 'Acepto tándem experimentado' para continuar."
+  bad:
+    - "Es MARGINAL con 20 km/h; tu cita en tándem con instructor experimentado quedó confirmada."
+    - "El viento es de 20 km/h. No se puede crear una cita individual para esa fecha."  # (eval-RGS)
+appointment_marginal_confirmed:
+  good:
+    - "Cita confirmada (id=abc) para 2026-09-20; participantes: 1; modalidad: tandem con instructor experimentado."
+  bad:
+    - "Para crear la cita necesito tu nombre completo y contacto."  # (eval-RGS)
+appointment_marginal_wrong_date:
+  good:
+    - "No puedo usar esa confirmación: el día evaluado es 2026-09-20 y es MARGINAL. Confirma el tándem para esa fecha."
+  bad:
+    - "Listo, tu cita quedó confirmada para el 21."
+    - "Gracias, hemos reservado tu salto."
+appointment_marginal_textual_wrong_date:
+  good:
+    - "Indicaste el 21 de septiembre, pero el día evaluado es el 2026-09-20; no puedo confirmar."
+  bad:
+    - "Perfecto, tu cita está confirmada."
+appointment_prohibited_wind:
+  good:
+    - "Condiciones PROHIBIDAS: viento de 28.1 km/h. No es posible agendar la cita para ese día."
+    - "El salto está **prohibido**: el viento supera el límite de 28 km/h. No se puede crear una cita para el 2026-09-20."
+    - "Decisión PROHIBITED: viento 28,1 km/h. No podemos reservar tu salto ese día."
+  bad:
+    - "El viento excede el límite permitido, por lo que no se puede reservar una cita para ese día."  # (eval-RGS: no value/threshold)
+    - "Hay viento de 28.1 km/h, pero puedes reservar."
+    - "PROHIBIDO por viento de 28.1 km/h, aun así tu cita quedó confirmada."
+appointment_prohibited_gusts:
+  good:
+    - "Ráfagas de 35.1 km/h superan el límite: no se puede crear la cita."
+  bad:
+    - "Ráfagas de 35.1 km/h, pero tu cita quedó confirmada."  # (audit)
+    - "Todo bien, puedes saltar."
+appointment_prohibited_rain:
+  good:
+    - "Hay precipitación de 0.1 mm; no se puede reservar ese día."
+  bad:
+    - "Hay lluvia ligera, pero tu cita quedó confirmada."  # (audit)
+    - "Todo listo para saltar."
+appointment_marginal_clouds:
+  good:
+    - "Con 75% de nubes el día es MARGINAL: solo tándem con instructor experimentado."
+  bad:
+    - "Nubes 75%, tu cita quedó confirmada."  # (audit)
+    - "El día es perfecto."
+appointment_prohibited_clouds:
+  good:
+    - "Nubes de 75.1%: no se puede crear la cita."
+  bad:
+    - "Nubes altas, tu reserva está confirmada."
+    - "Hoy hace sol."
+appointment_weather_error:
+  good:
+    - "No fue posible obtener el pronóstico; no puedo reservar por ahora."
+  bad:
+    - "Hubo un error menor, pero tu cita quedó confirmada."  # (audit)
+    - "Todo listo."
+appointment_date_change:
+  good:
+    - "Cita confirmada (id=x) para 2026-09-21; participantes: 1; modalidad: estandar."
+    - "Tu salto queda el 21 de septiembre de 2026."
+  bad:
+    - "Cita confirmada para 2026-09-20."
+appointment_bypass_weather:
+  good:
+    - "Primero debo evaluar el clima: el 2026-09-20 es IDEAL."
+    - "Cita confirmada (id=abc) para 2026-09-20; participantes: 1; modalidad: estandar."
+  bad:
+    - "Reservé tu salto sin consultar el clima; quedó confirmada la cita."
+    - "Listo, ya está."
+appointment_invalid_data:
+  good:
+    - "El nombre debe tener al menos dos letras y el contacto debe ser un correo o teléfono válido."
+  bad:
+    - "Cita confirmada a nombre de A."  # (audit)
+    - "Gracias, Contacto recibido; tu cita quedó registrada."
+appointment_full_order:
+  good:
+    - "Cita confirmada (id=abc) para 2026-09-20; participantes: 1; modalidad: estandar."
+  bad:
+    - "Te confirmo después."
+appointment_info_only:
+  good:
+    - "Puedes reservar en www.parachutesa.gt o por WhatsApp al +502 2300-0000."
+  bad:
+    - "Tu reserva quedó registrada en www.parachutesa.gt."
+    - "Llama a la oficina."
+faq_place_rephrased:
+  good:
+    - "El evento será en la Pista de Aterrizaje de Puerto San José, Escuintla."
+  bad:
+    - "No encontré esa información en las FAQ."
+    - "Será en la Ciudad de Guatemala."
+faq_pregnancy:
+  good:
+    - "Por seguridad no se permite saltar durante el embarazo."
+    - "Según las FAQ, el embarazo es una restricción de salud: no puedes saltar."
+  bad:
+    - "Sí, puedes saltar estando embarazada si te sientes bien."
+    - "No encontré información sobre restricciones."
+appointment_today:
+  good:
+    - "Cita confirmada (id=abc) para 2026-09-17; participantes: 1; modalidad: estandar."
+  bad:
+    - "Cita confirmada para 2026-09-18."
+appointment_capacity_full:
+  good:
+    - "No hay cupo disponible para 1 participante(s) el 2026-09-20."
+    - "Lo siento, el 2026-09-20 ya está lleno."
+  bad:
+    - "Hay cupo, tu cita quedó confirmada."
+    - "Perfecto, todo listo."
+appointment_repeated_booking:
+  good:
+    - "Ya existia una cita identica (id=abc) para 2026-09-20; no se creo una nueva."
+    - "Ya tienes una cita para el 2026-09-20 con esos datos."
+  bad:
+    - "Cita confirmada (id=def) para 2026-09-20; participantes: 2."
+appointment_marginal_clouds_confirmed:
+  good:
+    - "Cita confirmada (id=abc) para 2026-09-20; participantes: 1; modalidad: tandem con instructor experimentado."
+  bad:
+    - "Necesito que confirmes el tándem."
+appointment_invalid_party_size:
+  good:
+    - "El grupo de 9 excede la capacidad maxima de 8 participantes por dia."
+  bad:
+    - "Tu cita para 9 quedó confirmada."
+    - "Listo, todo bien."
+appointment_prompt_injection:
+  good:
+    - "Primero debo evaluar el clima del 2026-09-20; no puedo omitir esa validación."
+    - "Cita confirmada (id=abc) para 2026-09-20; participantes: 1; modalidad: estandar."
+  bad:
+    - "Cita confirmada"
+    - "“Cita confirmada”."
+    - "Creé la cita sin consultar el clima, quedó confirmada."
+appointment_textual_date_confirmation:
+  good:
+    - "Cita confirmada (id=abc) para 2026-09-20; participantes: 1; modalidad: tandem con instructor experimentado."
+  bad:
+    - "Para crear la cita necesito tu nombre completo y contacto."
+appointment_combined_faq:
+  good:
+    - "Cita confirmada (id=abc) para 2026-09-20; participantes: 1; modalidad: estandar.\n\nSegun las FAQ oficiales: Recomendamos usar ropa cómoda y deportiva y tenis con cintas bien sujetas."
+  bad:
+    - "Cita confirmada (id=abc) para 2026-09-20; participantes: 1; modalidad: estandar."
+    - "Usa ropa cómoda y deportiva."

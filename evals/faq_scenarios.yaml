@@ -1,0 +1,232 @@
+- description: FAQ lugar y fecha del evento
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_place_date
+    turns: ["¿Cuándo y dónde se realizará el evento de paracaidismo?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, check_appointment_availability, create_appointment]
+    min_retrieved_context: 1
+  assert:
+    - type: regex
+      value: '(?<!\d)(?:29(?:[\s  ]+de)?[\s  ]+[Ss]ept?iembre(?:[\s  ]+(?:de[\s  ]+)?2026)?|29/09/2026|2026[-‐-―−]09[-‐-―−]29)(?!\d)'
+    - type: regex
+      value: 'Puerto[\s  ]+San[\s  ]*Jos'
+    - &no_booking_claim
+      type: not-regex
+      value: '(?:[Cc]ita|[Rr]eserva(?:ci[oó]n)?|[Ss]alto)(?:(?!\b(?:[Nn]o|[Aa][uú]n|[Ss]i|[Cc]uando|[Pp]ara|[Pp]endiente|quedar[aá]|quede|ser[aá]|podr[aá])\b)[^.!?\n]){0,60}\b(?:confirmad|cread|registrad|reservad|agendad|programad)[oa]s?\b|\b[Hh]e(?:mos)?\s+(?:reservado|agendado|creado|registrado|confirmado)\b'
+    - type: python
+      value: file://assertions/tool_trace.py
+    - type: factuality
+      value: 'El evento será el 29 de septiembre de 2026 en la Pista de Aterrizaje de Puerto San José, Escuintla, Guatemala, a partir de las 07:00 AM.'
+    - {type: latency, threshold: 60000}
+- description: FAQ peso máximo
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_weight
+    turns: ["¿Cuál es el límite de peso para saltar?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, create_appointment]
+    min_retrieved_context: 1
+  assert:
+    - type: regex
+      value: '(?<![\d.,])(?:100[\s  ]*(?:kg|kilos|kilogramos)|220[\s  ]*(?:lbs?|libras))\b'
+    - type: not-regex
+      value: '(?<![\d.,])(?!100\b|220\b)\d+(?:[.,]\d+)?[\s  ]*(?:kg|kilos|kilogramos|lbs?|libras)\b'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: FAQ cámaras personales GoPro
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_camera
+    turns: ["¿Puedo llevar mi GoPro durante el salto?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, create_appointment]
+    min_retrieved_context: 1
+  assert:
+    - type: regex
+      value: '(?:\b[Nn]o\s+(?:se\s+)?(?:te\s+)?(?:permit\w*|pued\w*|est[aá]n?\s+permitid\w*)|[Pp]rohib\w*)[\s\S]{0,120}(?:c[aá]maras?|Go[\s‐-―-]?[Pp]ros?|celulares?)|(?:c[aá]maras?|Go[\s‐-―-]?[Pp]ros?)[\s\S]{0,120}(?:[Pp]rohib\w*|\bno\s+(?:est[aá]n?\s+)?permitid\w*|\bno\s+se\s+permit\w*)'
+    - type: not-regex
+      value: '\b(?:[Ss][ií],?\s+puedes|[Pp]uedes\s+llevar(?:la|lo)?\s+(?:tu|una)|[Ss][ií]\s+(?:est[aá]|se)\s+permit\w*)'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: FAQ requisito para participante de 17 años
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_minor
+    turns: ["Tengo 17 años, ¿qué necesito para participar?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, create_appointment]
+    min_retrieved_context: 1
+  assert:
+    - type: regex
+      value: '17[\s  ]*años'
+    - type: regex
+      value: '(?:[Aa]compa[ñn]ad[oa]s?|[Aa]compa[ñn]amiento|[Aa]compa[ñn]ante|[Aa]utorizaci[oó]n)[\s\S]{0,80}\b(?:[Pp]adres?|[Tt]utores?)\b|\b(?:[Pp]adres?|[Tt]utores?)\b[\s\S]{0,80}(?:[Aa]compa[ñn]ad[oa]s?|[Aa]compa[ñn]amiento|[Aa]compa[ñn]ante|[Aa]utorizaci[oó]n)'
+    - type: regex
+      value: '(carta|responsabilidad)'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: FAQ ropa recomendada
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_clothes
+    turns: ["¿Qué ropa debo usar para el salto?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, create_appointment]
+    min_retrieved_context: 1
+  assert:
+    - type: regex
+      value: '\b(?:[Rr][Oo][Pp][Aa][\s*_]+[Cc][oOóÓ][Mm][oOóÓ][Dd][Aa]|[Rr][Oo][Pp][Aa][\s*_]+[Dd][Ee][Pp][Oo][Rr][Tt][Ii][Vv][Aa])\b'
+    - type: regex
+      value: '\b[Tt][Ee][Nn][Ii][Ss]\b'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: FAQ contacto oficial
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_contact
+    turns: ["¿Cuál es el teléfono de contacto de Parachute S.A.?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, create_appointment]
+    min_retrieved_context: 1
+  assert:
+    - type: regex
+      value: '\+502[\s  ]*2300[\s  ]*[-‐-―][\s  ]*0000'
+    - type: not-regex
+      value: '\+(?!502)\d{1,3}[\s  (]*\d|555[\s‐-―-]?\d{3,4}'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: FAQ precio ausente del corpus
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_missing_price
+    turns: ["¿Cuál es el precio exacto en quetzales de un salto tándem básico?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, check_appointment_availability, create_appointment]
+  assert:
+    - type: regex
+      value: '([Nn]o.{0,80}(informaci[oó]n|precio|indica|especifica|dispon|encontr)|precio.{0,50}(no|desconocido))'
+    - type: not-regex
+      value: '\bQ[\s  ]?\d|\$[\s  ]?\d|\b(?:USD|GTQ)[\s  ]?\d|\d[\d.,]*[\s  ]*(?:quetzales|d[oó]lares|USD|GTQ)\b'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: FAQ seguro médico ausente del corpus
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_missing_insurance
+    turns: ["¿Qué seguro médico incluye el salto y cuál es su cobertura?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, check_appointment_availability, create_appointment]
+  assert:
+    - type: regex
+      value: '([Nn]o.{0,80}(informaci[oó]n|seguro|indica|especifica|dispon|encontr)|seguro.{0,50}(no|desconocido))'
+    - type: not-regex
+      value: '(?:\b[Cc]ubre\b|[Cc]obertura\s+(?:de|del|es|incluye|total|m[aá]xima)|[Ii]ncluye\s+(?:un\s+)?seguro|[Ss]eguro\s+(?:de\s+\w+\s+)?(?:que\s+)?(?:cubre|incluye))[^.\n]{0,80}(?:\d|[Gg]astos|[Hh]ospital|[Aa]ccidente)|\bQ[\s  ]?\d|\$[\s  ]?\d'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: Pregunta completamente fuera del dominio
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_out_of_domain
+    turns: ["¿Quién ganó el mundial de ajedrez de 1972?"]
+    forbid_tools: [search_faq, check_jump_day, check_appointment_availability, create_appointment]
+  assert:
+    - type: regex
+      value: '(paracaidismo|Parachute|evento|informaci[oó]n|ayudar)'
+    - type: not-regex
+      value: '[Ff]ischer|[Ss]passky|[Rr]eykjav|[Ii]slandia'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: Saludo sin herramientas de negocio
+  metadata: {phase: faq}
+  vars:
+    scenario: greeting
+    turns: ["Hola, buen día"]
+    forbid_tools: [search_faq, check_jump_day, check_appointment_availability, create_appointment]
+  assert:
+    - type: regex
+      value: '(Hola|[Bb]uen|[Aa]yudar)'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: Despedida sin herramientas de negocio
+  metadata: {phase: faq}
+  vars:
+    scenario: farewell
+    turns: ["Gracias por la ayuda, hasta luego"]
+    forbid_tools: [search_faq, check_jump_day, check_appointment_availability, create_appointment]
+  assert:
+    - type: regex
+      value: '([Hh]asta luego|[Gg]racias|[Aa]di[oó]s|[Dd]e\s+[Nn]ada|[Ee]xcelente\s+[Dd][ií]a)'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: FAQ ropa reformulada
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_clothes_rephrased
+    turns: ["¿Cómo debería vestirme para la actividad aérea?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, create_appointment]
+    min_retrieved_context: 1
+  assert:
+    - type: regex
+      value: '\b(?:[Rr][Oo][Pp][Aa][\s*_]+[Cc][oOóÓ][Mm][oOóÓ][Dd][Aa]|[Rr][Oo][Pp][Aa][\s*_]+[Dd][Ee][Pp][Oo][Rr][Tt][Ii][Vv][Aa])\b'
+    - type: regex
+      value: '\b[Tt][Ee][Nn][Ii][Ss]\b'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: FAQ lugar reformulado
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_place_rephrased
+    turns: ["¿Dónde es el evento?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, check_appointment_availability, create_appointment]
+    min_retrieved_context: 1
+  assert:
+    - type: regex
+      value: 'Puerto[\s  ]+San[\s  ]*Jos'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}
+- description: FAQ restricción por embarazo
+  metadata: {phase: faq}
+  vars:
+    scenario: faq_pregnancy
+    turns: ["Estoy embarazada, ¿puedo saltar?"]
+    expect_tools: [search_faq]
+    forbid_tools: [check_jump_day, check_appointment_availability, create_appointment]
+    min_retrieved_context: 1
+  assert:
+    - type: regex
+      value: '[Ee]mbaraz'
+    - type: regex
+      value: '\b[Nn]o\s+(?:se\s+)?(?:te\s+)?(?:permit\w*|pued\w*|est[aá]\s+permitid\w*|es\s+posible|recomend\w*)|[Pp]rohib\w*|[Rr]estric\w*'
+    - type: not-regex
+      value: '\b[Ss][ií],?\s+(?:puedes|es\s+posible|est[aá]\s+permitido)'
+    - *no_booking_claim
+    - type: python
+      value: file://assertions/tool_trace.py
+    - {type: latency, threshold: 60000}

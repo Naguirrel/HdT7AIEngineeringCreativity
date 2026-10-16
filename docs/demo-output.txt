@@ -1,0 +1,44 @@
+=== centralized ===
+Usuario: ¿Cuál es la edad mínima para poder saltar?
+[Central Supervisor]: La edad mínima requerida para saltar es de **18 años** con documento de identificación oficial (DPI o Pasaporte).  
+Los menores de 16 y 17 años pueden saltar **solo acompañados por sus padres o tutores legales**, firmando la carta de responsabilidad en el lugar.
+Usuario: Quiero saltar el 2026-09-21, ¿se puede? Si es posible resérvame, mi nombre es Ana Lopez y mi contacto es ana@example.com.
+[Central Supervisor]: Lo siento, pero el 21 de septiembre de 2026 no cumple con las condiciones de seguridad necesarias para realizar un salto. Los pronósticos indican:
+
+- **Precipitación:** 42.2 mm (límites: ≤ 0 mm).  
+- **Cobertura de nubes:** 97 % (límites: ≤ 75 %).
+
+Debido a que ambos parámetros superan los niveles permitidos, no es posible programar una cita para esa fecha.  
+
+Si deseas elegir otra fecha o necesitas más información, ¡házmelo saber!
+Usuario: ¿Puedo reservar para el 2027-04-06?
+[Central Supervisor]: No, no podemos confirmar ni reservar esa fecha.  
+El 6 de abril de 2027 está **fuera del horizonte de pronóstico** de nuestros datos meteorológicos, por lo que no podemos determinar si las condiciones serían seguras para saltar. Hasta que tengamos una evaluación climática, la plataforma no permite crear una cita para esa fecha.  
+
+Si tienes otra fecha en mente o necesitas más información, avísame.
+
+=== hierarchical ===
+Usuario: ¿Cuál es la edad mínima para poder saltar?
+[Root Manager]: La edad mínima para saltar es **18 años** y debes presentar un documento de identificación oficial (DPI o Pasaporte).
+
+Los menores de 16 y 17 años pueden saltar únicamente acompañados por sus padres o tutores legales, firmando la carta de responsabilidad en el lugar.
+Usuario: Quiero saltar el 2026-09-21, ¿se puede? Si es posible resérvame, mi nombre es Ana Lopez y mi contacto es ana@example.com.
+[Root Manager]: Lo siento, pero no es posible organizar un salto para el 21 de septiembre de 2026. Las condiciones climáticas en esa fecha exceden los límites de seguridad establecidos (precipitación y cobertura de nubes demasiado altas).
+
+Si tienes otra fecha en mente o quieres recibir recomendaciones sobre cuándo podría ser seguro saltar, avísame y con gusto te ayudo a revisar la disponibilidad.
+Usuario: ¿Puedo reservar para el 2027-04-06?
+[Root Manager]: Lo siento, pero la fecha solicitada **2027‑04‑06** está fuera del horizonte de pronóstico disponible, por lo que no es posible crear una cita para ese día.
+
+Si deseas intentar con otra fecha o necesitas más información, por favor avísame.
+
+=== decentralized ===
+Usuario: ¿Cuál es la edad mínima para poder saltar?
+[FAQ Agent]: La edad mínima para saltar es **18 años** con un documento de identificación oficial (DPI o pasaporte).  
+
+Los menores de 16 y 17 años pueden participar **solo acompañados por sus padres o tutores legales**, firmando la carta de responsabilidad correspondiente en el lugar.
+Usuario: Quiero saltar el 2026-09-21, ¿se puede? Si es posible resérvame, mi nombre es Ana Lopez y mi contacto es ana@example.com.
+[ERROR] Error code: 400 - {'error': {'message': "Tool call validation failed: tool call validation failed: attempted to call tool 'transfer_to_weather_agent' which was not in request.tools", 'type': 'invalid_request_error', 'code': 'tool_use_failed', 'failed_generation': '{"name": "transfer_to_weather_agent", "arguments": {"reason":"User wants to reserve a jump on a specific date. The request should be handed over to the Weather Agent for coordination."}}'}}
+Usuario: ¿Puedo reservar para el 2027-04-06?
+[Weather Agent]: ¡Claro! Te paso el tema al **Weather Agent**, quien verificará las condiciones climáticas y la disponibilidad para los días que mencionas.  
+
+*Por favor, espera un instante mientras se hace el traspaso.*

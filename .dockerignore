@@ -1,0 +1,40 @@
+# Secrets: never copy credentials into any image layer.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Version control and local environments
+.git
+.venv
+venv/
+env/
+
+# Node and Promptfoo local state, outputs and caches
+node_modules
+.promptfoo
+promptfoo-state
+reports
+*.log
+logs/
+
+# Python caches and test artifacts
+__pycache__
+*.py[cod]
+.pytest_cache
+.mypy_cache
+.ruff_cache
+.coverage
+htmlcov/
+
+# IDE and OS files
+.vscode
+.idea
+*.swp
+.DS_Store
+Thumbs.db
+
+# Documentation is not needed at runtime
+docs
+*.md

@@ -1,0 +1,46 @@
+services:
+  centralized:
+    build:
+      context: .
+    command: ["python", "-m", "src.agents.centralized.main"]
+    environment:
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      FAQ_PATH: ${FAQ_PATH:-}
+    stdin_open: true
+    tty: true
+
+  hierarchical:
+    build:
+      context: .
+    command: ["python", "-m", "src.agents.hierarchical.main"]
+    environment:
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      FAQ_PATH: ${FAQ_PATH:-}
+    stdin_open: true
+    tty: true
+
+  decentralized:
+    build:
+      context: .
+    command: ["python", "-m", "src.agents.decentralized.main"]
+    environment:
+      LLM_API_KEY: ${LLM_API_KEY:-}
+      LLM_BASE_URL: ${LLM_BASE_URL:-}
+      LLM_MODEL: ${LLM_MODEL:-}
+      FAQ_PATH: ${FAQ_PATH:-}
+    stdin_open: true
+    tty: true
+
+  tests:
+    build:
+      context: .
+    command: ["pytest", "-v"]
+    environment:
+      LLM_API_KEY: test-key
+      LLM_BASE_URL: https://example.invalid/v1
+      LLM_MODEL: test-model
+    profiles: ["test"]
