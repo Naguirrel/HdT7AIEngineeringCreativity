@@ -1,6 +1,79 @@
-> **Nueva integracion MCP + A2A:** [instalacion, arquitectura, pruebas y video](docs/mcp-a2a.md). La verificacion de ejecucion de esta integracion esta pendiente; consultar el estado en esa guia.
+# HDT7 — Parachute S.A. con MCP y A2A
 
-# HDT6 — Evaluación de agentes con Promptfoo: Parachute S.A.
+La Hoja de Trabajo 7 conecta una terminal A2A con el supervisor central y sus
+especialistas. Las herramientas de FAQ, clima, disponibilidad y reservas se
+ejecutan en un servidor MCP separado. Ese proceso mantiene el calendario
+compartido en memoria y aplica las reglas de negocio antes de crear una cita.
+
+## Estado de esta versión
+
+La integración MCP/A2A está implementada en este proyecto original, pero sus
+pruebas y el flujo con proveedor LLM real siguen **pendientes de verificación en
+este checkout**. La [guía de MCP y A2A](docs/mcp-a2a.md) describe la arquitectura,
+los casos de prueba y el video. Los resultados históricos de HDT6, más abajo,
+corresponden a la arquitectura anterior.
+
+## Instalar HDT7 en PowerShell
+
+Abre PowerShell en la raíz de este proyecto y crea un entorno dedicado. El
+archivo `requirements-protocols.txt` incluye las dependencias de la aplicación
+y agrega `mcp`, `a2a-sdk` y los paquetes de transporte HTTP. Ejecutar con el
+Python global o con un `.venv` anterior puede producir `ModuleNotFoundError: No
+module named 'mcp'`.
+
+```powershell
+python -m venv .venv-protocols
+& '.\.venv-protocols\Scripts\python.exe' -m pip install -r requirements-protocols.txt
+& '.\.venv-protocols\Scripts\python.exe' -m pip check
+```
+
+Comprueba que el módulo se instaló en ese mismo entorno:
+
+```powershell
+& '.\.venv-protocols\Scripts\python.exe' -c "import mcp, a2a; print('MCP y A2A disponibles')"
+```
+
+El servidor A2A requiere `LLM_API_KEY`, `LLM_BASE_URL` y `LLM_MODEL` válidos.
+Configúralos como variables de entorno o en un `.env` local basado en
+`.env.example`. No compartas la clave ni sobrescribas un `.env` existente.
+MCP y la terminal no necesitan esa clave.
+
+## Ejecutar MCP, A2A y la terminal
+
+Abre tres ventanas de PowerShell en la raíz del proyecto. Usa el ejecutable
+del entorno dedicado en cada una y deja abiertos los dos servidores:
+
+```powershell
+# Ventana 1: servidor MCP
+& '.\.venv-protocols\Scripts\python.exe' -m src.protocols.mcp_server --port 8101
+
+# Ventana 2: servidor A2A; requiere el proveedor LLM configurado
+& '.\.venv-protocols\Scripts\python.exe' -m src.protocols.a2a_server --port 8100 --mcp-url http://127.0.0.1:8101/mcp
+
+# Ventana 3: cliente que descubre la Agent Card y conserva la conversación
+& '.\.venv-protocols\Scripts\python.exe' -m src.protocols.terminal --url http://127.0.0.1:8100
+```
+
+La Agent Card se publica en
+`http://127.0.0.1:8100/.well-known/agent-card.json`. Para usar clima IDEAL
+simulado y un reloj fijo (`2026-09-17`), agrega `--demo` al comando MCP. Esta
+versión original no ofrece `--scripted` ni variantes de `--demo`: A2A sigue
+requiriendo un proveedor LLM incluso cuando MCP usa el fixture.
+
+## Pruebas de HDT7
+
+Después de instalar las dependencias, ejecuta:
+
+```powershell
+& '.\.venv-protocols\Scripts\python.exe' -m pytest -q -p no:cacheprovider tests/protocols
+& '.\.venv-protocols\Scripts\python.exe' -m pytest -q -p no:cacheprovider
+```
+
+Estas pruebas no se han ejecutado en este checkout. Su resultado debe revisarse
+antes de afirmar que la hoja está completa. Consulta también la
+[guía de MCP y A2A](docs/mcp-a2a.md) para las verificaciones manuales.
+
+# HDT6 — Antecedentes y evaluación con Promptfoo
 
 Este repositorio parte del proyecto HDT5 (orquestación multiagente) y lo amplía
 para la hoja HDT6. Contiene tres arquitecturas de agentes (centralizada,
