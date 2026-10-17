@@ -5,6 +5,9 @@ especialistas. Las herramientas de FAQ, clima, disponibilidad y reservas se
 ejecutan en un servidor MCP separado. Ese proceso mantiene el calendario
 compartido en memoria y aplica las reglas de negocio antes de crear una cita.
 
+## Link del video
+Link del video Youtube (No listado): https://youtu.be/P01Mpx-0REA
+
 ## Estado de esta versión
 
 La integración MCP/A2A está implementada en este proyecto original, pero sus
